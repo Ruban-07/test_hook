@@ -30,3 +30,11 @@ pre-commit:
   # Rule 9: Check for Code Formatting in Git Staged Files
   - command: lefthook git-cz check --staged
     files: "staged:**.dart"
+
+  # Rule 10: Check for Unused Files
+  - command: flutter pub run unused_files:check
+    include: "**/*.dart"
+
+  # Rule 11: Check for Unused Variables
+  - command: flutter pub run unused_local_variable
+    include: "**/*.dart"
