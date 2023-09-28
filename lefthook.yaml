@@ -1,42 +1,39 @@
-# lefthook.yaml
-
-hooks:
-  pre-commit:
-    piped: true
-    commands:
-      1_preview_lint:
-        tags: lint
-        glob: "*.dart"
-        run: dart fix lib --dry-run
-      2_lint_code:
-        tags: lint
-        glob: "*.dart"
-        run: dart fix lib --apply && git add {staged_files}
-      3_format_code:
-        tags: format
-        glob: "*.dart"
-        run: dart format {staged_files} && git add {staged_files}
-      4_static_code_analysis:
-        tags: analyze
-        run: flutter analyze
-      5_static_code_analyser:
-        tags: analyze, dart_code_metrics
-        run: flutter pub run dart_code_metrics_presets:metrics analyze lib
-      6_check-unnecessary-nullable:
-        tags: analyze, dart_code_metrics
-        run: flutter pub run dart_code_metrics_presets:metrics check-unnecessary-nullable lib
-      7_check-unused-files:
-        tags: analyze, dart_code_metrics
-        run: flutter pub run dart_code_metrics_presets:metrics check-unused-files lib
-      8_check-unused-i10n:
-        tags: analyze, dart_code_metrics
-        run: flutter pub run dart_code_metrics_presets:metrics check-unused-l10n lib
-      9_1_check-unused-code:
-        tags: analyze, dart_code_metrics
-        run: flutter pub run dart_code_metrics_presets:metrics check-unused-code lib
-      9_2_tests:
-        tags: test
-        run: flutter test
+pre-commit:
+  piped: true
+  commands:
+    1_preview_lint:
+      tags: lint
+      glob: "*.dart"
+      run: dart fix lib --dry-run
+    2_lint_code:
+      tags: lint
+      glob: "*.dart"
+      run: dart fix lib --apply && git add {staged_files}
+    3_format_code:
+      tags: format
+      glob: "*.dart"
+      run: dart format {staged_files} && git add {staged_files}
+    4_static_code_analysis:
+      tags: analyze
+      run: flutter analyze
+    5_static_code_analyser:
+      tags: analyze, dart_code_metrics
+      run: flutter pub run dart_code_metrics:metrics analyze lib
+    6_check-unnecessary-nullable:
+      tags: analyze, dart_code_metrics
+      run: flutter pub run dart_code_metrics:metrics check-unnecessary-nullable lib
+    7_check-unused-files:
+      tags: analyze, dart_code_metrics
+      run: flutter pub run dart_code_metrics:metrics check-unused-files lib
+    8_check-unused-i10n:
+      tags: analyze, dart_code_metrics
+      run: flutter pub run dart_code_metrics:metrics check-unused-l10n lib
+    9_1_check-unused-code:
+      tags: analyze, dart_code_metrics
+      run: flutter pub run dart_code_metrics:metrics check-unused-code lib
+    9_2_tests:
+      tags: test
+      run: flutter test
 
 post-merge:
   commands:
