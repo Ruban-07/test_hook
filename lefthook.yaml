@@ -1,0 +1,32 @@
+pre-commit:
+  # Rule 1: Static Analysis with Dart Analyzer
+  - command: flutter analyze
+
+  # Rule 2: Format Code with Dart Formatter
+  - command: flutter format --set-exit-if-changed .
+
+  # Rule 3: Linting with Flutter Lints
+  - command: flutter analyze --no-pub --rules
+
+  # Rule 4: Test Coverage Report
+  - command: flutter test --coverage
+    exclude: coverage/**
+
+  # Rule 5: Check for Unused Imports
+  - command: flutter pub run remove_from_coverage -k -r
+
+  # Rule 6: Security Scanning with Dart Code Metrics Presets
+  - command: flutter pub global run dart_code_metrics_presets:metrics
+    include: "**/*.dart"
+
+  # Rule 7: Ensure Proper Documentation
+  - command: flutter pub global run doc
+    include: "**/*.dart"
+
+  # Rule 8: Running Unit Tests
+  - command: flutter test
+    include: test/**
+
+  # Rule 9: Check for Code Formatting in Git Staged Files
+  - command: lefthook git-cz check --staged
+    files: "staged:**.dart"
