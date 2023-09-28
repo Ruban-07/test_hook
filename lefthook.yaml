@@ -1,13 +1,37 @@
-# lefthook.yaml
-
 hooks:
   pre-commit:
-    - dartanalyzer
-    - flutter pub get
-    - flutter analyze
-    - flutter test
-    - dart unused_files
-    - dart unused_variables
-    - flutter format
-    - flutter pub get
-    - flutter analyze
+    - lint:
+        executable: flutter
+        args:
+          - analyze
+    - format:
+        executable: flutter
+        args:
+          - format
+    - test:
+        executable: flutter
+        args:
+          - test
+    - unused:
+        executable: flutter
+        args:
+          - pub-get
+          - run
+          - build_runner
+          - analyze
+          - --no-sound-null-safety
+          - --no-migration
+          - --no-current-package
+          - --no-ignore
+    - unused-files:
+        executable: flutter
+        args:
+          - pub-get
+          - run
+          - build_runner
+          - analyze
+          - --no-sound-null-safety
+          - --no-migration
+          - --no-current-package
+          - --no-ignore
+          - --unused-files
